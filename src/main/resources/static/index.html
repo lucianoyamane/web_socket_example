@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Webchat WebSocket</title>
+        <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="main-content" class="container">
+            <div class="row text-center">
+                <h2>WebChat WebSocket</h2>
+            </div>
+        </div>
+
+        <div class="col-md-1">
+            <input type="button" class="btn" id="webchat-connect" value="Connect"/>
+        </div>
+
+        <div class="row">
+            <div class="row text-center"><h2>Generated id</h2></div>
+            <div id="user-id-div" class="row">
+                <label id="user-id-label"></label>
+            </div>
+        </div>
+        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+        <script src="/js/index.js"></script>
+    </body>
+</html>
