@@ -14,15 +14,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
                 .addEndpoint("/websocket-app")
-                .setHandshakeHandler(new FilterHandshakeHandler())
                 .withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app");
+//        registry.enableSimpleBroker("/user", "/topic", "/queue");
         registry
-                .enableStompBrokerRelay("/user", "/topic", "/queue")
+                .enableStompBrokerRelay( "/topic", "/queue")
                 .setRelayHost("localhost")
                 .setRelayPort(61613)
                 .setSystemLogin("admin")

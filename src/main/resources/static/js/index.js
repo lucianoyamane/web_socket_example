@@ -4,41 +4,47 @@
         return document.querySelector(str);
     }
 
-    function stompSubscribe(stompClient, endpoint, callback){ //8
-        stompClient.subscribe(endpoint, callback)
-        return stompClient
+    function stompSubscribe(endpoint, callback){ 
+        this.stompClient.subscribe(endpoint, callback)
       }
 
-    function connect(){ //1-1
+    function connect(){ 
         return new Promise((resolve, reject) => {
-          let stompClient = Stomp.over(new SockJS('/websocket-app'))
-          stompClient.connect({}, (frame) => resolve(stompClient))
+          this.stompClient = Stomp.over(new SockJS('/websocket-app'))
+          this.stompClient.connect({}, (frame) => resolve())
         })
     }
 
-    function stompClientSendMessage(stompClient, endpoint){ // 9
-        stompClient.send(endpoint, {}, 'new')
-        return stompClient
-      }
-
     function displayUserList(id){    
         select("#user-id-label").innerHTML = id;
-      }
+    }
+
+    function initRequest(initRequestListenerFunction) {
+        fetch('http://localhost:8600/register')
+            .then((r) => r.json())
+            .then((data) => initRequestListenerFunction(data))
+            .catch((e) => console.log(e));
+    }
+
+    function initRequestListener(id) {
+        console.log(id);
+        connect()
+            .then(() => 
+                    stompSubscribe(`/queue/${id}`, (data) => {
+                        let mensagem = data.body;
+                        console.log("mensagem recebida", id);
+                        displayUserList(mensagem);
+                    })
+                );
+    }
 
     window.addEventListener('load', function(event){
         let connectButton = select("#webchat-connect");
-
+        
         connectButton.addEventListener('click', () => {
-            connect()
-                .then((stompClient) => {
-                    stompSubscribe(stompClient, '/queue/newMember', (response) => {
-                        let id = response.body;
-                        displayUserList(id);
-                    })
-                    stompClientSendMessage(stompClient, '/app/register')
-                });
-                
-                
+
+            initRequest(initRequestListener);
+
         });
     });
     
