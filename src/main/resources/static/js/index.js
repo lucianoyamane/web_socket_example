@@ -15,8 +15,12 @@
         })
     }
 
-    function displayUserList(id){    
+    function displayId(id){    
         select("#user-id-label").innerHTML = id;
+    }
+
+    function displayMessage(mensagem){    
+        select("#user-message-label").innerHTML = mensagem;
     }
 
     function initRequest(initRequestListenerFunction) {
@@ -28,24 +32,19 @@
 
     function initRequestListener(id) {
         console.log(id);
+        displayId(id);
         connect()
             .then(() => 
-                    stompSubscribe(`/queue/${id}`, (data) => {
+                    stompSubscribe(`/queue/adea8903-e294-46c9-9951-e46951eb968f`, (data) => {
                         let mensagem = data.body;
                         console.log("mensagem recebida", id);
-                        displayUserList(mensagem);
+                        displayMessage(mensagem);
                     })
                 );
     }
 
     window.addEventListener('load', function(event){
-        let connectButton = select("#webchat-connect");
-        
-        connectButton.addEventListener('click', () => {
-
-            initRequest(initRequestListener);
-
-        });
+        initRequest(initRequestListener);
     });
     
 })();

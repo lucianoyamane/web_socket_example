@@ -7,18 +7,21 @@
     <body>
         <div id="main-content" class="container">
             <div class="row text-center">
-                <h2>WebChat WebSocket</h2>
+                <h2>WebSocket</h2>
             </div>
-        </div>
-
-        <div class="col-md-4 center-block">
-            <input type="button btn-primary" class="btn" id="webchat-connect" value="Connect"/>
         </div>
 
         <div class="row">
             <div class="row text-center"><h2>Generated id</h2></div>
-            <div id="user-id-div" class="row text-center">
+            <div class="row text-center">
                 <label id="user-id-label"></label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="row text-center"><h2>Message</h2></div>
+            <div class="row text-center">
+                <label id="user-message-label"></label>
             </div>
         </div>
         <script src="/webjars/sockjs-client/sockjs.min.js"></script>

@@ -23,13 +23,13 @@ public class WebSocketEventListener {
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-
-        String username = (String) headerAccessor.getSessionAttributes().get("username");
-        if(username != null) {
-            Message chatMessage = new Message();
-            chatMessage.setType("Leave");
-            chatMessage.setSender(username);
-            messagingTemplate.convertAndSend("/topic/javainuse", chatMessage);
-        }
+        System.out.println(headerAccessor.getSessionAttributes().toString());
+//        String username = (String) headerAccessor.getSessionAttributes().get("username");
+//        if(username != null) {
+//            Message chatMessage = new Message();
+//            chatMessage.setType("Leave");
+//            chatMessage.setSender(username);
+//            messagingTemplate.convertAndSend("/topic/javainuse", chatMessage);
+//        }
     }
 }
